@@ -5,7 +5,11 @@ CFLAGS = -Wall -Wextra -Werror
 
 INCLUDES = -Iinclude -ILIBFT -IPRINTF -Iget_next_line
 
-SRC = builtin.c lexer.c main.c parser_utils.c parser.c
+SRC = src/main.c \
+	  src/builtin.c \
+	  src/lexer.c \
+	  src/parser.c \
+	  src/parser_utils.c
 OBJ = $(SRC:.c=.o)
 
 
@@ -19,7 +23,7 @@ $(NAME): $(OBJ)
 	@make -C LIBFT
 	@make -C PRINTF
 	@make -C get_next_line
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(GNL) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(GNL) -o $(NAME) -Ireadline -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
