@@ -44,6 +44,12 @@ void	parser(t_token *tokens);
 t_token	*new_token(char *value, t_token_type type);
 void	add_token(t_token **list, t_token *new);
 void	print_tokens(t_token *tokens);
-void    free_tokens(t_token **list);
+void	free_tokens(t_token **list);
+int is_whitespace(char c);
+int	is_special_char(char c);
+t_token	*token_last(t_token *token);
+int	ft_token_size(t_token *token);
+int	is_quote(char c);
+
 
 #endif

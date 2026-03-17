@@ -22,7 +22,7 @@ t_token	*new_token(char *value, t_token_type type)
 */
 void add_token(t_token **list, t_token *new)
 {
-    t_token *temp;
+    t_token *last;
     if(!list || !new)
         return;
     if(!*list)
@@ -30,10 +30,8 @@ void add_token(t_token **list, t_token *new)
         *list = new;
         return;
     }
-    temp = *list;
-    while(temp->next)
-        temp = temp-next;
-    temp->next = new;
+    last = token_last(*list);
+    last->next = new;
 }
 
 /*
@@ -84,4 +82,47 @@ int is_whitespace(char c)
 int	is_special_char(char c)
 {
 	return (c == '|' || c == '<' || c == '>');
+}
+
+/*
+** LİSTENİN SON ELEMANINI BULMA
+** add_token fonksiyonunda her seferinde listenin başına dönüp 
+** sona kadar gitmek yerine, bu yardımcıyı kullanmak kodu temiz tutar.
+*/
+t_token	*token_last(t_token *token)
+{
+	if (!token)
+		return (NULL);
+	while (token->next)
+		token = token->next;
+	return (token);
+}
+
+
+/*
+** LİSTE BOYUTUNU HESAPLAMA
+** İleride kaç tane pipe (|) olduğunu veya kaç tane argüman
+** girildiğini saymak için bu fonksiyonu kullanacağız.
+*/
+int	ft_token_size(t_token *token)
+{
+	int	count;
+
+	count = 0;
+	while (token)
+	{
+		count++;
+		token = token->next;
+	}
+	return (count);
+}
+
+/*
+** TIRNAK KONTROLÜ
+** Lexer yazarken en çok zorlanacağın kısım tırnaklar (quote) olacak.
+** Bir karakterin tek veya çift tırnak olup olmadığını hızlıca kontrol eder.
+*/
+int	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
 }
