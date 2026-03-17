@@ -44,5 +44,6 @@ void	parser(t_token *tokens);
 t_token	*new_token(char *value, t_token_type type);
 void	add_token(t_token **list, t_token *new);
 void	print_tokens(t_token *tokens);
+void    free_tokens(t_token **list);
 
 #endif
