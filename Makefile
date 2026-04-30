@@ -1,45 +1,51 @@
-Name = minishell
-
+NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-INCLUDES = -Iinclude -ILIBFT -IPRINTF -Iget_next_line
+INCLUDES = -I parser/include \
+			-I LIBFT \
+			-I PRINTF \
+			-I get_next_line
 
-SRC = src/main.c \
-	  src/builtin.c \
-	  src/lexer.c \
-	  src/parser.c \
-	  src/parser_utils.c
-OBJ = $(SRC:.c=.o)
+GNL_SRCS = get_next_line/get_next_line.c\
+			get_next_line/get_next_line_utils.c
 
+SRCS	= 	parser/src/main.c \
+			parser/src/lexer.c \
+			parser/src/parser.c \
+			parser/src/parser_utils.c \
+			parser/src/builtin.c \
+			$(GNL_SRCS)
 
-LIBFT = LIBFT/LIBFT.a
-PRINTF = PRINTF/LIBFTPRINTF.a
-GNL = get_next_line/get_next_line.a
+OBJ = $(SRCS:.c=.o)
 
-all: $(NAME)
+LIBFT = LIBFT/libft.a
+PRINTF = PRINTF/libftprintf.a
 
+all: $(LIBFT) $(PRINTF) $(NAME)
+
+$(LIBFT):
+	@make -C LIBFT --no-print-directory
+ 
+$(PRINTF):
+	@make -C PRINTF --no-print-directory
+ 
 $(NAME): $(OBJ)
-	@make -C LIBFT
-	@make -C PRINTF
-	@make -C get_next_line
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF) $(GNL) -o $(NAME) -Ireadline -o $(NAME)
-
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(PRINTF) -lreadline -o $(NAME)
+ 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
+ 
 clean:
-	@make clean -C LIBFT
-	@make clean -C PRINTF
-	@make clean -C get_next_line
+	@make clean -C LIBFT --no-print-directory
+	@make clean -C PRINTF --no-print-directory
 	rm -f $(OBJ)
-
+ 
 fclean: clean
-	@make fclean -C LIBFT
-	@make fclean -C PRINTF
-	@make fclean -C get_next_line
+	@make fclean -C LIBFT --no-print-directory
+	@make fclean -C PRINTF --no-print-directory
 	rm -f $(NAME)
-
+ 
 re: fclean all
-
+ 
 .PHONY: all clean fclean re
