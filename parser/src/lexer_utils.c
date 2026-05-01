@@ -1,4 +1,4 @@
-#include ".../include/minishell.h"
+#include "../include/minishell.h"
 
 /* Çift yıldız (**) kullanıyoruz çünkü string'in içindeki konumumuzu 
    gerçekten ileri sarmak istiyoruz. */
@@ -11,41 +11,45 @@ void	skip_spaces(char **line)
 static int get_info(char *str, t_token_type *form)
 {
     if (ft_strncmp(str, "<<", 2) == 0)
-		*type = TOKEN_DLESS;
+		*form = TOKEN_DLESS;
 	else if (ft_strncmp(str, ">>", 2) == 0)
-		*type = TOKEN_DGREAT;
+		*form = TOKEN_DGREAT;
 	else if (*str == '<')
-		*type = TOKEN_LESS;
+		*form = TOKEN_LESS;
 	else if (*str == '>')
-		*type = TOKEN_GREAT;
+		*form = TOKEN_GREAT;
 	else if (*str == '|')
-		*type = TOKEN_PIPE;
+		*form = TOKEN_PIPE;
 	else
 		return (0); /* Operatör değilse uzunluk 0 döner */
 		
-	if (*type == TOKEN_DLESS || *type == TOKEN_DGREAT)
+	if (*form == TOKEN_DLESS || *form == TOKEN_DGREAT)
 		return (2); /* Çift karakterli ise 2 byte */
 	return (1);     /* Tek karakterli ise 1 byte */
 }
 
 int	handle_operator(char **line, t_token **list)
 {
-    t_token_type form;
-    int len;
-    t_token *new;
-
-/* Stringi ver, bana türünü ve kaç karakter atlamam gerektiğini söyle */
-	len = get_info(*line, &form);
+   	t_token_type	type;
+	int				len;
+	t_token			*new;
+	char 			*tmp_str;
+  
+	len = get_info(*line, &type);
 	if (len == 0)
-		return (0); 
-		
-	(*line) += len; /* Pointer'ı tek kalemde tespit edilen uzunluk kadar ilerlet */
-	
-	new = new_token(NULL, type); /* Token tiplerimiz dökümandaki yapıyla birebir uyumlu */
-	if (!new)
-		return (1);
-		
-	token_add_back(lst, new);
+		return (0);
+	tmp_str = ft_substr(*line,0,len);
+	if (!tmp_str)
+		return(1);
+	/* Önce token'ı oluştur, başarılıysa pointer'ı ilerlet */
+	new = new_token(temp_str, type);
+	if(!new)
+	{
+		free(tmp_str);
+		return(1);
+	}
+	(*line) += len;
+	token_add_back(list, new);
 	return (0);
 }
 
