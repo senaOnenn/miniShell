@@ -63,7 +63,7 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	char	**args;		/* ["ls", "-l", NULL] şeklinde NULL sonlandırılmış */
-	t_redir	*redirs;	/* bu komutun redirection listesi                  */
+	t_redir	*redir_lst;	/* bu komutun redirection listesi                  */
 	int		input_fd;	/* varsayılan: 0 (STDIN)                           */
 	int		output_fd;	/* varsayılan: 1 (STDOUT)                          */
 	int		is_builtin;	/* 1: builtin, 0: external komut                   */
@@ -105,6 +105,10 @@ t_redir	*new_redir(char *file, t_redir_type type);	/* yeni redir oluştur  */
 void	redir_add_back(t_redir **lst, t_redir *new);	/* redir listeye ekle  */
 void	free_cmds(t_cmd *cmds, int count);		/* komut dizisini serbest bırak */
 
+int     count_cmds(t_token *tokens);
+int     handle_redir(t_token **tokens, t_cmd *cmd);
+int     collect_args(t_token *tokens, t_cmd *cmd);
+void    init_cmd(t_cmd *cmd);
 /* ======================== EXPANSION PROTOTİPLERİ ======================== */
 /* expand.c → $VAR ve $? genişletmesi                              */
 
