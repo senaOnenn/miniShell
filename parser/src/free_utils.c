@@ -43,12 +43,12 @@ void	free_tokens(t_token *list)
 {
 	t_token	*tmp;
 
-	while (lst)
+	while (list)
 	{
-		tmp = lst->next;
-		free(lst->value);
-		free(lst);
-		lst = tmp;
+		tmp = list->next;
+		free(list->value);
+		free(list);
+		list = tmp;
 	}
 }
 
@@ -69,4 +69,18 @@ void	free_cmds(t_cmd *cmds, int count)
 		i++;
 	}
 	free(cmds);
+}
+
+/* t_redir listesini serbest bırakır */
+void	free_redirs(t_redir *list)
+{
+	t_redir	*tmp;
+ 
+	while (list)
+	{
+		tmp = list->next;
+		free(list->file); /* new_redir'e ft_strdup ile geldi, free edilmeli */
+		free(list);
+		list = tmp;
+	}
 }

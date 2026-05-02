@@ -8,18 +8,21 @@ static int	parse_cmd(t_token **tokens, t_cmd *cmd)
 		/* Yönlendirme token'ı ise handle_redir'e yolla */
 		if ((*tokens)->type >= TOKEN_LESS && (*tokens)->type <= TOKEN_DLESS)
 		{
+			/* handle_redir zaten pointer'ı ilerleteceği için sadece hata kontrolü yapıyoruz */
 			if (handle_redir(tokens, cmd) != 0)
 				return (1);
 		}
-		/* Yönlendirme veya WORD değilse (örneğin saçma sapan bir token ise) hata ver */
-		else if ((*tokens)->type != TOKEN_WORD)
+		/* Normal bir kelime (WORD) ise sadece pointer'ı ilerlet */
+		else if ((*tokens)->type == TOKEN_WORD)
+		{
+			*tokens = (*tokens)->next;
+		}
+		/* Ne WORD ne de YÖNLENDİRME değilse (örneğin arka arkaya iki pipe '||' gelmişse) */
+		else
 		{
 			ft_putstr_fd("minishell: syntax error\n", 2);
 			return (1);
 		}
-		/* TOKEN_WORD ise hiçbir şey yapma, pointer'ı ilerlet */
-		if (*tokens)
-			*tokens = (*tokens)->next;
 	}
 	return (0);
 }

@@ -5,6 +5,7 @@ static int	parse_exit_code(char *str, long long *code)
 {
 	int					sign;
 	unsigned long long	res;
+	int					max_digit;
 
 	sign = 1;
 	res = 0;
@@ -20,10 +21,13 @@ static int	parse_exit_code(char *str, long long *code)
 	{
 		if (!ft_isdigit(*str))
 			return (0); /* Harf varsa hata */
-		/* Long Long Maximum (9223372036854775807) taşma kontrolü */
-		if (res > 922337203685477580ULL || \
-			(res == 922337203685477580ULL && (*str - '0') > (unsigned long long)(7 + (sign == -1))))
-			return (0); /* Sınıraşıldıysa hata */
+			
+		/* Sağ tarafı int olarak hesaplayıp int ile kıyaslıyoruz, hata gidiyor */
+		max_digit = 7 + (sign == -1);
+		if (res > 922337203685477580ULL
+			|| (res == 922337203685477580ULL && (*str - '0') > max_digit))
+			return (0); /* Sınır aşıldıysa hata */
+			
 		res = res * 10 + (*str - '0');
 		str++;
 	}

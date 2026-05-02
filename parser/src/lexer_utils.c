@@ -42,7 +42,7 @@ int	handle_operator(char **line, t_token **list)
 	if (!tmp_str)
 		return(1);
 	/* Önce token'ı oluştur, başarılıysa pointer'ı ilerlet */
-	new = new_token(temp_str, type);
+	new = new_token(tmp_str, type);
 	if(!new)
 	{
 		free(tmp_str);

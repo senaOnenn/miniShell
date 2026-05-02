@@ -1,4 +1,4 @@
-#include "../../minishell.h"
+#include "../include/minishell.h"
 
 /* 
  * İstediğin hata mesajını STDERR'e (2) yazar ve 

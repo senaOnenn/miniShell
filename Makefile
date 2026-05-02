@@ -7,8 +7,8 @@ INCLUDES = -I parser/include \
 			-I PRINTF \
 			-I get_next_line
 
-GNL_SRCS = get_next_line/get_next_line.c\
-			get_next_line/get_next_line_utils.c
+#GNL_SRCS = get_next_line/get_next_line.c\
+#			get_next_line/get_next_line_utils.c
 
 SRCS	= 	parser/src/main.c \
 			parser/src/lexer.c \
@@ -32,7 +32,7 @@ SRCS	= 	parser/src/main.c \
 			parser/src/env_utils_0.c \
 			parser/src/env_utils_1.c \
 			parser/src/token.c \
-			$(GNL_SRCS)
+#			$(GNL_SRCS)
 
 OBJ = $(SRCS:.c=.o)
 

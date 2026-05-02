@@ -91,9 +91,9 @@ extern volatile sig_atomic_t	g_signal;
 /* lexer.c → ham string'i token listesine dönüştürür               */
 
 t_token	*lexer(char *line);					/* ana lexer fonksiyonu        */
-void	skip_spaces(char **line)
-int	handle_operator(char **line, t_token **list)
-int handle_word(char **line, t_token **list)
+void	skip_spaces(char **line);
+int	handle_operator(char **line, t_token **list);
+int handle_word(char **line, t_token **list);
 t_token	*new_token(char *value, t_token_type type);	/* yeni token oluştur  */
 void	token_add_back(t_token **list, t_token *new);	/* listeye ekle        */
 void	print_tokens(t_token *list);				/* debug: tokenları yazdır */
@@ -158,8 +158,9 @@ int		update_existing(char **env, char *key, char *value);
 /* ======================== GENEL YARDIMCILAR ======================== */
 
 void	free_array(char **arr);					/* NULL sonlandırılmış diziyi sil */
-char	*ft_strjoin_free(char *s1, char *s2);	/* join + s1'i free'le     */
 void	free_tokens(t_token *list);
 void	free_cmds(t_cmd *cmds, int count);
+void	free_redirs(t_redir *list);
 int		print_error(char *msg);
+char	*ft_strjoin_free(char *s1, char *s2);
 #endif

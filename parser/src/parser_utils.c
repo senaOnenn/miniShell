@@ -31,18 +31,5 @@ void	redir_add_back(t_redir **list, t_redir *new)
 	temp->next = new;
 }
 
-/* t_redir listesini serbest bırakır */
-static void	free_redirs(t_redir *list)
-{
-	t_redir	*tmp;
- 
-	while (list)
-	{
-		tmp = list->next;
-		free(list->file); /* new_redir'e ft_strdup ile geldi, free edilmeli */
-		free(list);
-		list = tmp;
-	}
-}
 
  
