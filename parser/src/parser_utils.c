@@ -45,22 +45,4 @@ static void	free_redirs(t_redir *list)
 	}
 }
 
-/* t_cmd dizisinin tamamını serbest bırakır */
-void	free_cmds(t_cmd *cmds, int count)
-{
-	int	i;
- 
-	if (!cmds)
-		return ;
-	i = 0;
-	while (i < count)
-	{
-		if (cmds[i].args != NULL)	
-			free_array(cmds[i].args); /* NULL sonlandırılmış string dizisi */
-		if(cmds[i].redir_lst != NULL)
-			free_redirs(cmds[i].redir_lst);
-		i++;
-	}
-	free(cmds);
-}
  

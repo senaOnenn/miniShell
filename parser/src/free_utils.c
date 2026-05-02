@@ -37,3 +37,36 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	free(s1);                    /* s1'i temizle, s2'ye dokunma */
 	return (result);
 }
+
+/* Token listesini tamamen serbest bırakır */
+void	free_tokens(t_token *list)
+{
+	t_token	*tmp;
+
+	while (lst)
+	{
+		tmp = lst->next;
+		free(lst->value);
+		free(lst);
+		lst = tmp;
+	}
+}
+
+/* t_cmd dizisinin tamamını serbest bırakır */
+void	free_cmds(t_cmd *cmds, int count)
+{
+	int	i;
+ 
+	if (!cmds)
+		return ;
+	i = 0;
+	while (i < count)
+	{
+		if (cmds[i].args != NULL)	
+			free_array(cmds[i].args); /* NULL sonlandırılmış string dizisi */
+		if(cmds[i].redir_lst != NULL)
+			free_redirs(cmds[i].redir_lst);
+		i++;
+	}
+	free(cmds);
+}
