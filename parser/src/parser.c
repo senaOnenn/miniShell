@@ -5,21 +5,19 @@ static int	parse_cmd(t_token **tokens, t_cmd *cmd)
 {
 	while (*tokens && (*tokens)->type != TOKEN_PIPE)
 	{
-		if ((*tokens)->type == TOKEN_WORD)
-		{
-			/* args collect_args ile toplu alınıyor, geç */
-		}
-		/* Norminette için enum hilesi ile kısaltıldı */
-		else if ((*tokens)->type >= TOKEN_LESS && (*tokens)->type <= TOKEN_DLESS)
+		/* Yönlendirme token'ı ise handle_redir'e yolla */
+		if ((*tokens)->type >= TOKEN_LESS && (*tokens)->type <= TOKEN_DLESS)
 		{
 			if (handle_redir(tokens, cmd) != 0)
 				return (1);
 		}
-		else
+		/* Yönlendirme veya WORD değilse (örneğin saçma sapan bir token ise) hata ver */
+		else if ((*tokens)->type != TOKEN_WORD)
 		{
 			ft_putstr_fd("minishell: syntax error\n", 2);
 			return (1);
 		}
+		/* TOKEN_WORD ise hiçbir şey yapma, pointer'ı ilerlet */
 		if (*tokens)
 			*tokens = (*tokens)->next;
 	}
@@ -33,8 +31,8 @@ void	init_cmd(t_cmd *cmd)
 		return ;
 	cmd->args = NULL;
 	cmd->redir_lst = NULL;
-	cmd->input_fd = 0;   /* Dökümandaki kural: STDIN default[cite: 1] */
-	cmd->output_fd = 1;  /* Dökümandaki kural: STDOUT default[cite: 1] */
+	cmd->input_fd = 0;   /* Dökümandaki kural: STDIN default */
+	cmd->output_fd = 1;  /* Dökümandaki kural: STDOUT default */
 	cmd->is_builtin = 0;
 	cmd->builtin_func = NULL;
 }

@@ -64,18 +64,3 @@ void	free_cmds(t_cmd *cmds, int count)
 	free(cmds);
 }
  
-/* Çift yıldızlı (NULL sonlandırmalı) string dizisini temizler */
-void	free_array(char **arr)
-{
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}

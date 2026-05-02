@@ -112,8 +112,18 @@ void    init_cmd(t_cmd *cmd);
 /* ======================== EXPANSION PROTOTİPLERİ ======================== */
 /* expand.c → $VAR ve $? genişletmesi                              */
 
-char	*expand_line(char *line, char **env, int exit_status); /* tüm satırı genişlet */
-char	*get_env_value(char *key, char **env);	/* env'den değer al    */
+/* Ana Yürütücü (main.c tarafından çağrılacak) */
+int		expand_cmds(t_shell *shell);
+
+/* Çekirdek Fonksiyon (expand.c içinden expand_core.c'ye bağlantı) */
+char	*expand_string(char *str, t_shell *shell);
+
+/* Yardımcı Araçlar (expand_core.c içinden expand_utils.c'ye bağlantı) */
+char	*get_env_value(char *key, char **env);
+char	*get_var(char **str, t_shell *shell);
+char	*resolve_var_value(char *name, t_shell *shell);
+char	*append(char *result, char *temp);
+int		plain_len(char *str);
 
 /* ======================== BUİLTİN PROTOTİPLERİ ======================== */
 /* builtin.c → shell'in kendi içinde çalıştırdığı komutlar         */
