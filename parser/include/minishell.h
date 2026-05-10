@@ -11,7 +11,7 @@
 # include <readline/history.h>
 # include "../../LIBFT/libft.h"
 # include "../../PRINTF/ft_printf.h"
-# include "../../get_next_line/get_next_line.h"
+/* # include "../../get_next_line/get_next_line/get_next_line.h"*/
 
 /* ======================== TOKEN TÜRLERİ ======================== */
 /* Lexer'ın ürettiği token türleri                                 */
@@ -163,4 +163,13 @@ void	free_cmds(t_cmd *cmds, int count);
 void	free_redirs(t_redir *list);
 int		print_error(char *msg);
 char	*ft_strjoin_free(char *s1, char *s2);
+
+/* ======================== executor functions ======================== */
+
+int		execute_shell(t_shell *shell);
+int		execute_single(t_shell *shell, t_cmd *cmd);
+int		apply_redirections(t_cmd *cmd);
+void	setup_signals(void);
+char	*get_cmd_path(char *cmd, char **env);
+
 #endif

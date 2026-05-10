@@ -1,6 +1,6 @@
 NAME = minishell
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I./parser/include
 
 INCLUDES = -I parser/include \
 			-I LIBFT \
@@ -10,7 +10,7 @@ INCLUDES = -I parser/include \
 #GNL_SRCS = get_next_line/get_next_line.c\
 #			get_next_line/get_next_line_utils.c
 
-SRCS	= 	parser/src/main.c \
+SRCS	= 	main.c \
 			parser/src/lexer.c \
 			parser/src/lexer_utils.c \
 			parser/src/parser.c \
@@ -32,6 +32,10 @@ SRCS	= 	parser/src/main.c \
 			parser/src/env_utils_0.c \
 			parser/src/env_utils_1.c \
 			parser/src/token.c \
+			executor/execute.c \
+			executor/signals.c \
+			executor/path.c \
+			executor/redirection.c \
 #			$(GNL_SRCS)
 
 OBJ = $(SRCS:.c=.o)
