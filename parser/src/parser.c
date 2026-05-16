@@ -62,6 +62,22 @@ static int	fill_cmd_array(t_cmd *cmds, t_token *tok, int count)
 	return (0);
 }
 
+static int	check_pipe_syntax(t_token *tokens)
+{
+	if (tokens && tokens->type == TOKEN_PIPE)
+		return (print_error("minishell: syntax error near unexpected token `|'\n"));
+	while (tokens)
+	{
+		if (tokens->type == TOKEN_PIPE)
+		{
+			if (!tokens->next || tokens->next->type == TOKEN_PIPE)
+				return (print_error("minishell: syntax error near unexpected token `|'\n"));
+		}
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
 /* Ana parser fonksiyonu */
 t_cmd	*parser(t_token *tokens, char **env)
 {
@@ -70,6 +86,8 @@ t_cmd	*parser(t_token *tokens, char **env)
 
 	(void)env;
 	if (!tokens)
+		return (NULL);
+	if (check_pipe_syntax(tokens) != 0)
 		return (NULL);
 	count = count_cmds(tokens);
 	cmds = malloc(sizeof(t_cmd) * count);

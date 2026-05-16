@@ -11,6 +11,7 @@
 # include <readline/history.h>
 # include "../../LIBFT/libft.h"
 # include "../../PRINTF/ft_printf.h"
+# include "../../get_next_line/get_next_line/get_next_line.h"
 /* # include "../../get_next_line/get_next_line/get_next_line.h"*/
 
 /* ======================== TOKEN TÜRLERİ ======================== */

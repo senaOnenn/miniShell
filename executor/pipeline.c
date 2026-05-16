@@ -14,7 +14,8 @@ static void	child_process(t_shell *shell, t_cmd *cmd, int in_fd, int fd[2])
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
-	close(fd[0]);
+	if (fd[0] != -1)
+	    close(fd[0]);
 	if (apply_redirections(cmd) != 0)
 		exit(1);
 	if (cmd->is_builtin)

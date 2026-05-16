@@ -37,6 +37,8 @@ SRCS	= 	main.c \
 			executor/path.c \
 			executor/redirection.c \
 			executor/pipeline.c \
+			get_next_line/get_next_line/get_next_line.c \
+			get_next_line/get_next_line/get_next_line_utils.c 
 #			$(GNL_SRCS)
 
 OBJ = $(SRCS:.c=.o)
