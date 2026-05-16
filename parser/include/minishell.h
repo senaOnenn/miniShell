@@ -169,7 +169,9 @@ char	*ft_strjoin_free(char *s1, char *s2);
 int		execute_shell(t_shell *shell);
 int		execute_single(t_shell *shell, t_cmd *cmd);
 int		apply_redirections(t_cmd *cmd);
+int		execute_pipeline(t_shell *shell);
 void	setup_signals(void);
 char	*get_cmd_path(char *cmd, char **env);
+
 
 #endif

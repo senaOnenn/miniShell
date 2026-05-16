@@ -36,12 +36,43 @@ int	apply_redirections(t_cmd *cmd)
 	redir = cmd->redir_lst;
 	while (redir)
 	{
-		if (redir->type != REDIR_HEREDOC)
+		if (redir->type == REDIR_HEREDOC)
+		{
+			if (apply_heredoc(redir) != 0)
+				return (1);
+		}
+		else
 		{
 			if (apply_one_redir(redir) != 0)
 				return (1);
 		}
 		redir = redir->next;
 	}
+	return (0);
+}
+
+static int	apply_heredoc(t_redir *redir)
+{
+	int		fd[2];
+	char	*line;
+
+	if (pipe(fd) < 0)
+		return (1);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line)
+			break ;
+		if (ft_strncmp(line, redir->file, ft_strlen(redir->file) + 1) == 0)
+		{
+			free(line);
+			break ;
+		}
+		ft_putendl_fd(line, fd[1]);
+		free(line);
+	}
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	return (0);
 }
