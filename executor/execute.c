@@ -98,5 +98,5 @@ int	execute_shell(t_shell *shell)
 		return (1);
 	if (shell->cmd_count == 1)
 		return (execute_single(shell, &shell->cmds[0]));
-	return (0);
+	return (execute_pipeline(shell));
 }

@@ -1,11 +1,1 @@
-LIBFT
-Makefile
-PRINTF
-executor
-get_next_line
-main.c
-main.o
-minishell
-out.txt
-parser
 hello

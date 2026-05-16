@@ -36,6 +36,7 @@ SRCS	= 	main.c \
 			executor/signals.c \
 			executor/path.c \
 			executor/redirection.c \
+			executor/pipeline.c \
 #			$(GNL_SRCS)
 
 OBJ = $(SRCS:.c=.o)
