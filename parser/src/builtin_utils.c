@@ -1,50 +1,51 @@
 #include "../include/minishell.h"
 
-/* Komutun builtin olup olmadığını kontrol eder */
 int	is_builtin(char *cmd)
 {
+	int				i;
+	t_builtin_map	map[] = {{"echo", builtin_echo}, {"cd", builtin_cd},
+		{"pwd", builtin_pwd}, {"env", builtin_env}, {"export", builtin_export},
+		{"unset", builtin_unset}, {"exit", builtin_exit}, {NULL, NULL}};
+
 	if (!cmd)
 		return (0);
-	if (ft_strncmp(cmd, "echo", 5) == 0)
-		return (1);
-	if (ft_strncmp(cmd, "cd", 3) == 0)
-		return (1);
-	if (ft_strncmp(cmd, "pwd", 4) == 0)
-		return (1);
-	if (ft_strncmp(cmd, "env", 4) == 0)
-		return (1);
-	if (ft_strncmp(cmd, "export", 7) == 0)
-		return (1);
-	if (ft_strncmp(cmd, "unset", 6) == 0)
-		return (1);
-	if (ft_strncmp(cmd, "exit", 5) == 0)
-		return (1);
+	i = -1;
+	while (map[++i].name)
+		if (ft_strncmp(cmd, map[i].name, ft_strlen(map[i].name) + 1) == 0)
+			return (1);
+	return (0);
+}
+
+static int	needs_output(char *cmd)
+{
+	int			i;
+	const char	*list[] = {"echo", "pwd", "env", "export", NULL};
+
+	i = -1;
+	while (list[++i])
+		if (ft_strncmp(cmd, list[i], ft_strlen(list[i]) + 1) == 0)
+			return (1);
 	return (0);
 }
 
 /* t_cmd'ye doğru builtin fonksiyon pointer'ını atar */
 void	set_builtin_func(t_cmd *cmd)
 {
-	char	*c;
+	int				i;
+	t_builtin_map	map[] = {{"echo", builtin_echo}, {"cd", builtin_cd},
+		{"pwd", builtin_pwd}, {"env", builtin_env}, {"export", builtin_export},
+		{"unset", builtin_unset}, {"exit", builtin_exit}, {NULL, NULL}};
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return ;
-	c = cmd->args[0];
-	cmd->is_builtin = is_builtin(c);
+	cmd->is_builtin = is_builtin(cmd->args[0]);
+	cmd->output_needed = needs_output(cmd->args[0]);
 	if (!cmd->is_builtin)
 		return ;
-	if (ft_strncmp(c, "echo", 5) == 0)
-		cmd->builtin_func = builtin_echo;
-	else if (ft_strncmp(c, "cd", 3) == 0)
-		cmd->builtin_func = builtin_cd;
-	else if (ft_strncmp(c, "pwd", 4) == 0)
-		cmd->builtin_func = builtin_pwd;
-	else if (ft_strncmp(c, "env", 4) == 0)
-		cmd->builtin_func = builtin_env;
-	else if (ft_strncmp(c, "export", 7) == 0)
-		cmd->builtin_func = builtin_export;
-	else if (ft_strncmp(c, "unset", 6) == 0)
-		cmd->builtin_func = builtin_unset;
-	else if (ft_strncmp(c, "exit", 5) == 0)
-		cmd->builtin_func = builtin_exit;
+	i = -1;
+	while (map[++i].name)
+	{
+		if (ft_strncmp(cmd->args[0], map[i].name, ft_strlen(map[i].name) + 1) == 0)
+			cmd->builtin_func = map[i].func;
+	}
 }

@@ -2,10 +2,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I./parser/include
 
-INCLUDES = -I parser/include \
-			-I LIBFT \
-			-I PRINTF \
-			-I get_next_line
+INCLUDES = -I./parser/include -I./LIBFT -I./PRINTF -I./get_next_line
 
 #GNL_SRCS = get_next_line/get_next_line.c\
 #			get_next_line/get_next_line_utils.c
@@ -23,6 +20,7 @@ SRCS	= 	main.c \
 			parser/src/error.c \
 			parser/src/builtin_unset.c \
 			parser/src/builtin_pwd.c \
+			parser/src/builtin_exp_utils.c \
 			parser/src/builtin_exp.c \
 			parser/src/builtin_exit.c \
 			parser/src/builtin_env.c\
@@ -37,8 +35,8 @@ SRCS	= 	main.c \
 			executor/path.c \
 			executor/redirection.c \
 			executor/pipeline.c \
-			get_next_line/get_next_line/get_next_line.c \
-			get_next_line/get_next_line/get_next_line_utils.c 
+			get_next_line/get_next_line.c \
+			get_next_line/get_next_line_utils.c 
 #			$(GNL_SRCS)
 
 OBJ = $(SRCS:.c=.o)

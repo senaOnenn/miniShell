@@ -11,8 +11,7 @@
 # include <readline/history.h>
 # include "../../LIBFT/libft.h"
 # include "../../PRINTF/ft_printf.h"
-# include "../../get_next_line/get_next_line/get_next_line.h"
-/* # include "../../get_next_line/get_next_line/get_next_line.h"*/
+# include "../../get_next_line/get_next_line.h"
 
 /* ======================== TOKEN TÜRLERİ ======================== */
 /* Lexer'ın ürettiği token türleri                                 */
@@ -68,6 +67,7 @@ typedef struct s_cmd
 	int		input_fd;	/* varsayılan: 0 (STDIN)                           */
 	int		output_fd;	/* varsayılan: 1 (STDOUT)                          */
 	int		is_builtin;	/* 1: builtin, 0: external komut                   */
+	int output_needed; /*1: çıktı üreten builtin (echo/pwd/env/export)*/
 	int		(*builtin_func)(char **args, char ***env); /* builtin pointer  */
 }	t_cmd;
 
@@ -82,6 +82,12 @@ typedef struct s_shell
 	int		exit_status;	/* son çalışan komutun çıkış kodu ($?)            */
 	int		signal_received;/* yakalanan sinyal numarası                      */
 }	t_shell;
+
+typedef struct s_builtin_map
+{
+	char	*name;
+	int		(*func)(char **args, char ***env);
+}	t_builtin_map;
 
 /* ======================== TEK GLOBAL ======================== */
 /* Norm kuralı: sadece 1 global değişkene izin var             */
@@ -143,7 +149,7 @@ int		builtin_unset(char **args, char ***env);	/* unset KEY           */
 int		builtin_exit(char **args, char ***env);		/* exit [kod]          */
 int		is_builtin(char *cmd);						/* builtin mi kontrol  */
 void	set_builtin_func(t_cmd *cmd);				/* fonksiyon pointer'ı ata */
-
+int	print_sorted_env(char **env);
 /* ======================== ENV PROTOTİPLERİ ======================== */
 /* env_utils.c → environment yönetimi                              */
 

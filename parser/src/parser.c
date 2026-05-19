@@ -37,6 +37,7 @@ void	init_cmd(t_cmd *cmd)
 	cmd->input_fd = 0;   /* Dökümandaki kural: STDIN default */
 	cmd->output_fd = 1;  /* Dökümandaki kural: STDOUT default */
 	cmd->is_builtin = 0;
+	cmd->output_needed = 0;
 	cmd->builtin_func = NULL;
 }
 

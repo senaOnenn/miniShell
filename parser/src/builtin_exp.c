@@ -53,14 +53,14 @@ static int	process_export(char *arg, char ***env)
 }
 
 /* export [KEY=VALUE] ... */
-int	builtin_export(char **args, char ***env)
+int builtin_export(char **args, char ***env)
 {
-	int	i;
-	int	status;
+	int i;
+	int status;
 
-	/* Argsız kullanım şimdilik env gibi davranıyor */
+	/* Argsız kullanım: Alfabetik sırala ve declare -x formatında bas */
 	if (!args[1])
-		return (builtin_env(args, env));
+		return (print_sorted_env(*env));
 	
 	i = 1;
 	status = 0;
