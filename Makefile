@@ -29,6 +29,7 @@ SRCS	= 	main.c \
 			parser/src/builtin_utils.c \
 			parser/src/env_utils_0.c \
 			parser/src/env_utils_1.c \
+			parser/src/utils.c \
 			parser/src/token.c \
 			executor/execute.c \
 			executor/signals.c \

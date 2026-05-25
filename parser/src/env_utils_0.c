@@ -42,11 +42,11 @@ char	*make_entry(char *key, char *value)
 {
 	char	*tmp;
 	char	*entry;
-
-	tmp = ft_strjoin(key, "=");
+ 
+	tmp = ft_strjoin_safe(key, "=");   /* key'e dokunmaz */
 	if (!tmp)
 		return (NULL);
-	entry = ft_strjoin(tmp, value);
+	entry = ft_strjoin_safe(tmp, value); /* tmp ve value'ya dokunmaz */
 	free(tmp);
 	return (entry);
 }

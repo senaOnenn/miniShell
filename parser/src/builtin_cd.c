@@ -5,10 +5,18 @@ static int	update_pwd(char ***env)
 {
 	char	cwd[4096];
 	char	*oldpwd;
+	char 	*oldpwd_cpy;
 
 	oldpwd = get_env_value("PWD", *env);
+	oldpwd_cpy = NULL;
 	if (oldpwd)
-		*env = env_update(*env, "OLDPWD", oldpwd);
+	{
+		oldpwd_cpy = ft_strdup(oldpwd); /* DÜZELTME: kopyala, pointer değil! */
+		if (!oldpwd_cpy)
+			return (1);
+		*env = env_update(*env, "OLDPWD", oldpwd_cpy);
+		free(oldpwd_cpy); /* env_update içinde ft_strjoin ile kopyalandı */
+	}
 	if (!getcwd(cwd, sizeof(cwd)))
 		return (1);
 	*env = env_update(*env, "PWD", cwd);

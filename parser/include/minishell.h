@@ -149,7 +149,7 @@ int		builtin_unset(char **args, char ***env);	/* unset KEY           */
 int		builtin_exit(char **args, char ***env);		/* exit [kod]          */
 int		is_builtin(char *cmd);						/* builtin mi kontrol  */
 void	set_builtin_func(t_cmd *cmd);				/* fonksiyon pointer'ı ata */
-int	print_sorted_env(char **env);
+int		print_sorted_env(char **env);
 /* ======================== ENV PROTOTİPLERİ ======================== */
 /* env_utils.c → environment yönetimi                              */
 
@@ -170,6 +170,7 @@ void	free_cmds(t_cmd *cmds, int count);
 void	free_redirs(t_redir *list);
 int		print_error(char *msg);
 char	*ft_strjoin_free(char *s1, char *s2);
+char	*ft_strjoin_safe(char const *s1, char const *s2);
 
 /* ======================== executor functions ======================== */
 
