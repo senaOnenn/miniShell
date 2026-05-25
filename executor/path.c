@@ -5,10 +5,10 @@ static char	*join_path(char *dir, char *cmd)
 	char	*tmp;
 	char	*full;
 
-	tmp = ft_strjoin(dir, "/");
+	tmp = ft_strjoin_safe(dir, "/");
 	if (!tmp)
 		return (NULL);
-	full = ft_strjoin(tmp, cmd);
+	full = ft_strjoin_safe(tmp, cmd);
 	free(tmp);
 	return (full);
 }

@@ -31,15 +31,21 @@ int	plain_len(char *str)
 }
 
 /* Değişken adını env'de arar, kopyasını döndürür ve 'name' pointer'ını temizler */
-char	*resolve_var_value(char *name, t_shell *shell)
+char    *resolve_var_value(char *name, t_shell *shell)
 {
-	char	*value;
+    char    *value;
+    char    *empty;
 
-	value = get_env_value(name, shell->env);
-	free(name); /* Leak önlemi: name artık işimize yaramıyor */
-	if (!value)
-		return (ft_strdup(""));
-	return (ft_strdup(value));
+    value = get_env_value(name, shell->env);
+    free(name); 
+    if (!value)
+    {
+        empty = malloc(1);
+        if (empty)
+            empty[0] = '\0';
+        return (empty);
+    }
+    return (ft_strdup(value));
 }
 
 /* '$' görünce değişken adını okur ve değerini döndürür */
@@ -62,10 +68,7 @@ char	*get_var(char **str, t_shell *shell)
 		
 	/* 3. Özel durum: Tek başına $ işareti */
 	if (len == 0)
-	{
-		(*str)++;
 		return (ft_strdup("$"));
-	}
 	
 	/* 4. İsmi kopar ve yardımcı fonksiyona gönder */
 	name = ft_substr(*str, 0, len);

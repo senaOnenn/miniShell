@@ -33,8 +33,8 @@ char	*ft_strjoin_free(char *s1, char *s2)
 		free(s1);
 		return (result);
 	}
-	result = ft_strjoin(s1, s2); /* libft'den — yeni malloc */
-	free(s1);                    /* s1'i temizle, s2'ye dokunma */
+	result = ft_strjoin_safe(s1, s2); /* free etmeyen versiyon */
+	free(s1);                          /* s1'i biz free ediyoruz */
 	return (result);
 }
 

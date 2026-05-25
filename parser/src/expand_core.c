@@ -88,7 +88,10 @@ char	*expand_string(char *str, t_shell *shell)
 {
 	char	*result;
  
-	result = ft_strdup("");
+	result = malloc(1);
+	if (!result)
+        return (NULL);
+    result[0] = '\0';
 	while (*str)
 	{
 		result = append(result, expand_chunk(&str, shell));
